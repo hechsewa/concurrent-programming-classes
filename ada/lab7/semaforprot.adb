@@ -1,4 +1,8 @@
 --semafor liczbowy na obiekcie chronionym
+
+--4. Zaimplementuj semafor liczbowy
+--na obiekcie chronionym
+
 with Ada.Text_IO;
 use Ada.Text_IO;
 
@@ -13,26 +17,28 @@ procedure semaforprot is
 		private
 			Sem: Integer := Size;
 	end SemLicz;
-	
+
 	--implementacja obiekt chroniony
+	--5. Zrealizuj wzajemne wykluczanie do Ekranu
+	--stosujac semafor
 	protected body SemLicz is
 		entry Wait
 			when Sem > 0 is
 			begin
 				Sem := Sem-1;
 		end Wait;
-		
+
 		procedure Signal is
 		begin
 			Sem := Sem+1;
-		end Signal;	
+		end Signal;
 	end SemLicz;
-	
+
 	--uzytkownik
 	task type User(Nr: Integer := 1) is
 		entry UseSem;
 	end User;
-	
+
 	task body User is
 	begin
 		accept UseSem;

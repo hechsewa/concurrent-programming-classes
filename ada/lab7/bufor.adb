@@ -1,13 +1,14 @@
---bufor wieloelementowy na typie chronionym producent-konsument
+--1. Napisz obsługę bufora wieloelementowego (N)
+--na typie chronionym do komunikacji Producent-Konsument.
 
 with Ada.Text_IO;
 use Ada.Text_IO;
 
 procedure Bufor is
-	
+
 	--deklaracja tablica
 	type Bufor_Tab is array (Integer range <>) of Character;
-	
+
 	--deklaracja bufor wieloelementowy
 	protected type Buf(Size : Integer) is
 		entry Wstaw(C : in Character);
@@ -18,10 +19,10 @@ procedure Bufor is
 			Iw : Integer := 1;
 			Counter : Integer := 0;
 	end Buf;
-	
+
 	--implementacja bufor wieloelementowy
 	protected body Buf is
-		
+
 		entry Wstaw(C : in Character)
 			when Counter<Size is
 			begin
@@ -29,7 +30,7 @@ procedure Bufor is
 				B(Iw) := C;
 				Counter := Counter+1;
 			end Wstaw;
-		
+
 		entry Pobierz(C : out Character)
 			when Counter>0 is
 			begin
@@ -38,15 +39,15 @@ procedure Bufor is
 				Counter := Counter-1;
 			end Pobierz;
 	end Buf;
-	
+
 	B1 : Buf(0);
-	
+
 	--producent
 	task type Producent is
 		entry Start;
 		entry Stop;
 	end Producent;
-	
+
 	task body Producent is
 		Ch : Character := 's';
 	begin
@@ -63,13 +64,13 @@ procedure Bufor is
 			end select;
 		end loop;
 	end Producent;
-	
+
 	--konsument
 	task type Konsument is
 		entry Start;
 		entry Stop;
 	end Konsument;
-	
+
 	task body Konsument is
 		Ch : Character := ' ';
 	begin
@@ -85,7 +86,7 @@ procedure Bufor is
 			end select;
 		end loop;
 	end Konsument;
-	
+
 
 --main
 Producent1: Producent;
@@ -97,8 +98,6 @@ begin
 	delay 10.0;
 	Producent1.Stop;
 	Konsument1.Stop;
-	
-	
+
+
 end Bufor;
-		
-	

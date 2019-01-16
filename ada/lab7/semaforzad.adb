@@ -1,4 +1,7 @@
 --semafor liczbowy na zadaniu
+--4.  Zaimplementuj semafor liczbowy:
+--wer. 1 - na zadaniu,
+
 with Ada.Text_IO;
 use Ada.Text_IO;
 
@@ -11,7 +14,7 @@ procedure semaforzad is
 		entry Wait;
 		entry Signal;
 	end SemLiczZad;
-	
+
 	--implementacja zadanie
 	task body SemLiczZad is
 	Sem: Integer;
@@ -30,14 +33,14 @@ procedure semaforzad is
 			end select;
 		end loop;
 	end SemLiczZad;
-	
+
 SemLiczZ: SemLiczZad;
-	
+
 	--zadanie uzytkownik
 	task type User(Nr: Integer := 1) is
 		entry UseSem;
 	end User;
-	
+
 	task body User is
 	begin
 		accept UseSem;
